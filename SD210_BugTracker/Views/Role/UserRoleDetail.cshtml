@@ -1,0 +1,50 @@
+﻿@model  UserRoleViewModel
+
+@{
+    ViewBag.Title = "UserRoleDetail";
+}
+
+<div class="container-fluid">  
+
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> Update user roles </h6>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            Username : @Model.UserNickName <br >  Email: @Model.UserName
+        </div>       
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <form method="post" enctype="multipart/form-data">
+                    <table class="table table-bordered display-5" cellspacing="0">
+                        <thead>
+                            <tr>
+                                @foreach (var ele in ViewBag.RoleNames)
+                                {
+                                    <th class="text-center">@ele.Name</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @for (var i = 0; i < Model.UserRoles.Count; i++)
+                                {
+                                    <td class="text-center" width="25%">
+                                        @Html.CheckBoxFor(Model => Model.UserRoles[i], new { @class = "checkbox" })
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save</button>&nbsp;
+                        <a class="btn btn-primary" href="@Url.Action("UserRoleList", "Role")" , role="button">Back</a>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

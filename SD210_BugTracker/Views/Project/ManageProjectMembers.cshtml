@@ -1,0 +1,94 @@
+﻿
+@model  ManageMembersViewModel
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> @ViewBag.ProjectName </h6>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">           
+            Project members 
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered display-5" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>UserName</th>
+                            <th>Role</th>                           
+                            <th class="text-center">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var ele in Model.Members)
+                        {
+                            <tr>
+                                <td>@ele.UserNickName</td>
+                                <td>
+
+                                    @for (var i = 0; i < ViewBag.RoleNames.Count; i++)
+                                    {
+                                        foreach (var e in ele.Roles)
+                                        {
+                                            if (ViewBag.RoleNames[i].Id == e.RoleId)
+                                            {<span> [@ViewBag.RoleNames[i].Name] </span><span>&nbsp;</span>}
+                                    }
+                                }
+                                </td>
+                                <td class="text-center"><a href="@Url.Action("ManageProjectMembers", "Project", new { UserID = ele.Id, PId = ViewBag.PId, Require="DeleteUser"} )"> <i class="fas fa-user-minus"></i> </a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            Users
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered display-5" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>UserName</th>
+                            <th>Role</th>
+                            <th class="text-center">Add</th>
+                        </tr>
+                    </thead>
+                    <tbody>                      
+
+                        @foreach (var ele in Model.Users)
+                        {
+                            <tr> 
+                                <td>@ele.UserNickName</td>
+                                <td>
+
+                                    @for (var i = 0; i < ViewBag.RoleNames.Count; i++)
+                                    {
+                                        foreach (var e in ele.Roles)
+                                        {
+                                            if (ViewBag.RoleNames[i].Id == e.RoleId)
+                                            { <span> [@ViewBag.RoleNames[i].Name] </span><span>&nbsp;</span> }
+                                        }
+                                    }
+                                </td>
+                                <td class="text-center"><a href="@Url.Action("ManageProjectMembers", "Project", new { UserID = ele.Id, PId = ViewBag.PId, Require="AddUser"} )"> <i class="fas fa-user-plus"></i> </a></td>          
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

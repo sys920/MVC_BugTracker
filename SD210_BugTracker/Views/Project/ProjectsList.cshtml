@@ -1,0 +1,44 @@
+﻿@model  List<ProjectsListViewModel>
+
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+    </div>
+    <div class="card shadow mb-4">       
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered display-5" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ProjectName</th>
+                            <th>Members</th>
+                            <th>Tikects</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th class="text-center">Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ele in Model)
+                        {
+                            <tr>
+                                <td>@ele.Name</td>
+                                <td>@ele.NumberOfMembers</td>
+                                <td>@ele.NumberOfTickets</td>
+                                <td>@ele.CreateDate.ToString("MM/dd/yyyy")</td>
+                                <td>@(ele.UpdateDate != null ? ele.UpdateDate.Value.ToString("MM/dd/yyyy") : "")</td>
+                                <td class="text-center"><a href="@Url.Action("ProjectDetail", "Project", new {PId =ele.Id})"> <i class="fas fa-tasks"></i> </a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

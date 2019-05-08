@@ -1,0 +1,60 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container-fluid">
+
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Bug-Tracker Demo Account</h6>
+    </div>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Content Row -->     
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-warning text-white shadow">
+                    <div class="card-body">
+                       Demo-Admin
+                        <div class="text-white-800 ">
+                            <a href="@Url.Action("Demo","Account", new {RoleName="Admin"}) "><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-success text-white shadow">
+                    <div class="card-body">
+                        Demo-Project Manager
+                        <div class="text-white-800 ">
+                            <a href="@Url.Action("Demo","Account", new {RoleName="ProjectManager"}) "><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-info text-white shadow">
+                    <div class="card-body">
+                        Demo-Developer
+                        <div class="text-white-800 ">
+                            <a href="@Url.Action("Demo","Account", new {RoleName="Developer"}) "><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-danger text-white shadow">
+                    <div class="card-body">
+                        Demo-Submitter
+                        <div class="text-white-800 ">
+                            <a href="@Url.Action("Demo","Account", new {RoleName="Submitter"}) "><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>       
+    </div>
+

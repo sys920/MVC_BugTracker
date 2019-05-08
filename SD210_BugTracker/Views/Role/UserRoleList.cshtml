@@ -1,0 +1,63 @@
+﻿@model  List<UsersListViewModel>
+
+@{
+    ViewBag.Title = "UserRoleList";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary">User's Role List </h6>
+    </div>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered display-5" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            @foreach (var ele in ViewBag.RoleNames)
+                            {
+                                <th>@ele.Name</th>
+                            }
+                            <th class="text-center">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ele in Model)
+                        {
+                            <tr>
+                                <td>@ele.UserNickName</td>
+                                <td>@ele.UserName</td>
+
+                                @foreach (var e in ViewBag.RoleNames)
+                                {
+
+
+                                    if (ele.UserRoles.Any(p => p.RoleId == e.Id))
+                                    {
+
+                                        <td class="text-center" width="10%"><i class="fas fa-check"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                }
+                                <td class="text-center"><a href="@Url.Action("UserRoleDetail", "Role", new {UserId =ele.UserId})"><i class="fas fa-user-tag"></i> </a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

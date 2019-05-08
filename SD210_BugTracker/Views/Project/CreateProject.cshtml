@@ -1,0 +1,48 @@
+﻿@model CreateProjectViewModel
+@{
+    ViewBag.Title = "CreateProject";
+}
+
+<div class="container-fluid">
+
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Create New Project</h6>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <form method="post" enctype="multipart/form-data">
+                    <table class="table table-bordered display-5" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <div>
+                                        @Html.LabelFor(Model => Model.Name, "Name : ")
+                                        @Html.TextBoxFor(Model => Model.Name, new { @class = "form-control  ", placeholder = "Type project name" })
+                                    </div>
+                                    <div class="text-danger"> @Html.ValidationMessageFor(Model => Model.Name) </div>
+                                    <div>&nbsp;</div>
+
+
+                                    <div>
+                                        @Html.LabelFor(Model => Model.Description, "Description : ")
+                                        @Html.TextAreaFor(Model => Model.Description, new { @class = "form-control  ", placeholder = "Type project Description" })
+                                    </div>
+                                    <div> </div>
+                                </td>
+                            </tr>                            
+                        </thead>                        
+                    </table>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">SAVE</button>
+                      
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

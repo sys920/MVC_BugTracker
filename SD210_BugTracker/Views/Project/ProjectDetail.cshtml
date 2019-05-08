@@ -1,0 +1,71 @@
+﻿@model ProjectDetailViewModel
+
+<div class="container-fluid">
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Project Detail</h6>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">              
+                <table class="table table-bordered display-5" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td>
+                                <div>
+                                    Project Name : @Model.Name
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    Description : @Model.Description
+                                </div>
+
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    Members : @Model.NumberOfMembers
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    Tickets : @Model.NumberOfTickets
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <span>Created Date : @Model.CreateDate </span> &nbsp; &nbsp;
+                                    @if (Model.UpdateDate.HasValue)
+                                    {
+                                        <span>Updated Date : @Model.UpdateDate</span>
+                                    }
+                                </div>
+                            </td>
+                        </tr>                            
+                    </thead> 
+                </table>
+                <div class="text-center">
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                    {
+                        <a class="btn btn-primary" href="@Url.Action("ManageProjectMembers", "Project", new {PId =Model.Id, ActionName=ViewBag.ActionName})" role="button">Manage Members</a>@:&nbsp;
+                        <a class="btn btn-primary" href="@Url.Action("EditProject", "Project", new {PId =Model.Id, ActionName=ViewBag.ActionName})" role="button">Edit project</a>
+                    }
+                   
+                </div>              
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

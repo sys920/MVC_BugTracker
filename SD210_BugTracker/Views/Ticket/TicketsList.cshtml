@@ -1,0 +1,62 @@
+﻿@model List<TicketsListViewModel>
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered display-5" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Ticket</th>
+                            <th>ProjectName</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Creator</th>
+                            <th>Assignee</th>
+                            @if (ViewBag.Title != "My Project's Ticket(s)")
+                            {
+                                <th class="text-center">Edit|Detail</th>
+                            }                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ele in Model)
+                        {
+                            <tr>
+                                <td>@ele.Title</td>
+                                <td>@ele.Project</td>
+                                <td>@ele.Created.ToString("MM/dd/yyyy")</td>
+                                <td>@(ele.Updated != null ? ele.Updated.Value.ToString("MM/dd/yyyy") : "")</td>
+                                <td>@ele.TicketType</td>
+                                <td>@ele.TicketStatus</td>
+                                <td>@ele.TicketPriority</td>
+                                <td>@ele.CreatedBy</td>
+                                <td>@ele.AssignedTo</td>
+
+                                @if (ViewBag.Title != "My Project's Ticket(s)")
+                                {
+                                    <td class="text-center">
+                                        <a href="@Url.Action("EditTicket", "Ticket", new { tId = ele.Id })"> <i class="fas fa-cog"></i></a>&nbsp;|&nbsp;
+                                        <a href="@Url.Action("DetailTicket", "Ticket", new { tId = ele.Id })"><i class="fas fa-tasks"></i> </a>
+                                    </td>
+                                }
+                           
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>           
+
+        </div>
+    </div>
+</div>
+
+
+

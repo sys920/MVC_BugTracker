@@ -1,0 +1,191 @@
+﻿@model DetailTicketViewModel
+@{
+    ViewBag.Title = "DetailTicket";
+       
+}
+
+<div class="container-fluid">
+
+    <div class="py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ticket details</h6>
+        @Html.ValidationSummary(true)
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered display-5" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="row">
+                                    <div class="col-md-6"> Project Name : @Model.Project</div>
+                                    <div class="col-md-6 text-right">
+                                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                        {
+
+                                            if (Model.NotificationStaus)
+                                            {
+
+                                                <a class="btn btn-primary" href="@Url.Action("ManageNotification","Ticket", new { tId = Model.Id, notificationStaus =false })" role="button"> Notification turn Off</a>
+                                            }
+                                            else
+                                            {
+
+                                                <a class="btn btn-dark" href="@Url.Action("ManageNotification","Ticket", new { tId = Model.Id, notificationStaus =true })" role="button"> Notification turn On</a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    Ticket Name : @Model.Title
+                                </div>
+                                <hr class="sidebar-divider my-0">
+
+                                <div>
+                                    Description : @Model.Description
+                                </div>
+                                <hr class="sidebar-divider my-0">
+
+                                <div>
+                                    Type : @Model.TicketType  &nbsp;&nbsp;Priority : @Model.TicketPriority &nbsp;&nbsp; Status : @Model.TicketStatus
+                                </div>
+                                <hr class="sidebar-divider my-0">
+
+                                <div>
+                                    <span>CreateBy : @Model.CreatedBy</span> &nbsp;&nbsp;
+                                    <span>Assigned to : @(Model.AssignedTo != null ? Model.AssignedTo : "No one assigned")</span>
+                                </div>
+                                <div>
+
+                                </div>
+                                <hr class="sidebar-divider my-0">
+                                <div>
+                                    <span>Created Date : @Model.Created </span> &nbsp; &nbsp;
+                                    <span>@(Model.Updated.HasValue ? "Updated Date : " + Model.Updated : "")</span>
+                                </div>
+                                <hr class="sidebar-divider my-0">
+                                <div>
+                                    <div>
+                                        <span>Uploaded File(s) :</span>
+                                    </div>
+                                    <ul>
+                                        @foreach (var ele in Model.TicketAttachments)
+                                        {
+                                         <li>
+                                             <span class="text-left">
+                                                 <a href="~/Upload/@ele.FilePath" target="_blank">@ele.FilePath</a>
+                                             </span> 
+
+
+                                            @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                            {
+                                                <sapn class="text-right">
+                                                    @Html.DeleteFile(Model.Id, ele.Id, ele.FilePath, @Url.Action("DeleteFile", "Ticket"))
+                                                </sapn>
+                                            }
+                                            else if (ele.UserId == ViewBag.UserId)
+                                            {
+                                                <span class="text-right">
+                                                    @Html.DeleteFile(Model.Id, ele.Id, ele.FilePath, @Url.Action("DeleteFile", "Ticket"))
+                                                </span>
+                                            }
+
+                                            </li>
+
+                                        }
+                                    </ul>
+
+                                </div>
+                                <form action="@Url.Action("UploadFile","Ticket")" , class="form-group" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="Id" value=@Model.Id />
+                                    <div>
+
+                                        <input type="file" name="File" class="btn" />&nbsp;<button type="submit" class="btn btn-primary">File Upload</button>
+                                    </div>
+                                    <div class="text-danger">@Html.ValidationMessage("FileExtensionError") </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="col-md-12">
+                    <form action="@Url.Action("CreateTicketComment","Ticket")" , class="form-inline" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="Id" value=@Model.Id />
+                        Leave a comment : &nbsp; <input type="text" name="Comment" class="form-control col-md-8 control-label" placeholder="Type new comment">&nbsp;<button type="submit" class="btn btn-primary">Add commnet</button>
+                    </form> <br>
+                </div>
+                <table class="table table-bordered display-5" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th width="50%">
+                                Ticket Comment
+                            </th>
+                            <th width="50%">
+                                Change History
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @foreach (var ele in Model.TicketCommentsList)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6"> @ele.UserNickName</div>
+                                        <div class="col-md-6 text-right">@ele.Created</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8 text-left">@ele.Comment</div>
+
+                                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                        {
+                                            <div class="col-md-4 text-right">
+                                                @Html.EditComment(Model.Id, ele.Id, ele.Comment, @Url.Action("EditTicketComment", "Ticket"))
+                                                @Html.DeleteComment(Model.Id, ele.Id, ele.Comment, @Url.Action("DeleteTicketComment", "Ticket"))
+                                            </div>
+                                        }
+                                        else if (ele.UserId == ViewBag.UserId)
+                                        {
+                                            <div class="col-md-4 text-right">
+                                                @Html.EditComment(Model.Id, ele.Id, ele.Comment, @Url.Action("EditTicketComment", "Ticket"))
+                                                @Html.DeleteComment(Model.Id, ele.Id, ele.Comment, @Url.Action("DeleteTicketComment", "Ticket"))
+                                            </div>
+                                        }
+                                        <br>
+                                    </div>                                   
+                                  
+                                    <hr class="sidebar-divider my-0">
+                                }
+                            </td>
+                            <td>
+                                @foreach (var ele in Model.TicketHistoryList)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6">@ele.User.UserNickName</div>
+                                        <div class="col-md-6 text-right">@ele.Changed.ToString("MM/dd/yyyy hh:mm tt")</div>
+                                    </div>
+                                    <div class="row">
+                                        @foreach (var element in ele.TicketHistoryChangedDetail)
+                                        {
+                                            <div class="col-md-12">Modified <span>@element.Property </span>  from  <span>@element.OldValue</span>  to @element.NewValue</div>
+                                        }
+
+                                    </div>
+                                    <hr class="sidebar-divider my-0">
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

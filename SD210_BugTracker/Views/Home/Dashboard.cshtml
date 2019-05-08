@@ -1,0 +1,137 @@
+﻿@model DashboardViewModel
+@{
+    ViewBag.Title = "Index Page";
+}
+
+    <div class="container-fluid">
+
+        <div class="py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Dash board</h6>
+        </div>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">    
+            
+            <!-- Content Row -->
+            <div class="row">
+
+                <!--The number of Project -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">Project(s)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.NumberOfProjects</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-layer-group fa-2x text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                {
+                    <!-- The number of Ticket -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xl font-weight-bold text-danger text-uppercase if-1">Open Ticket(s)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.NumberOfTicketsOpen / @Model.NumberOfTickets</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The number of Ticket -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xl font-weight-bold text-info text-uppercase mb-1">Resolved Ticket(s)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.NumberOfTicketsResolved / @Model.NumberOfTickets</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The number of Ticket -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xl font-weight-bold text-warning text-uppercase mb-1">Rejected Ticket(s)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.NumberOfTicketsRejected / @Model.NumberOfTickets</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (User.IsInRole("Developer"))
+                {
+                    <!-- The number of Ticket -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xl font-weight-bold text-success text-uppercase if-1">Assigned Ticket(s)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.NumberOfTicketsAssigned</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (User.IsInRole("Submitter"))
+                {
+                    <!-- The number of Ticket -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xl font-weight-bold text-warning text-uppercase if-1">Creadted Ticket(s)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.NumberOfTicketsCreated</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-clipboard-list fa-2x text-gray-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- Content Row -->
+                <div class="row">
+                    <!-- Area Chart -->
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
